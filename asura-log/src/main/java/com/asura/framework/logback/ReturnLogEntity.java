@@ -1,0 +1,49 @@
+/*
+ * Copyright (c) 2015, struggle.2036@163.com All Rights Reserved. 
+ *
+ * @project asura 
+ * @file ReturnLogEntity 
+ * @package com.asura.framework.logback 
+ *
+ * @date 2015/3/30 15:34 
+ */
+package com.asura.framework.logback;
+
+import com.alibaba.fastjson.JSON;
+
+/**
+ * <p> 系统日志返回数据日志实体 </P>
+ *
+ * <PRE>
+ * <BR>	修改记录
+ * <BR>-----------------------------------------------
+ * <BR>	修改日期			修改人			修改内容
+ * </PRE>
+ *
+ * @author SZL
+ * @version 1.0
+ * @since 1.0
+ */
+public class ReturnLogEntity extends DataLogEntity {
+
+    private static final long serialVersionUID = 5270278865718444083L;
+
+    //返回值记录日志
+    private String returnVal;
+
+    public ReturnLogEntity(DataLogEntity dle) {
+        super(dle.getClassName(), dle.getMethodName(), dle.getParams());
+    }
+
+    public ReturnLogEntity() {
+
+    }
+
+    public String getReturnVal() {
+        return returnVal;
+    }
+
+    public void setReturnVal(Object returnVal) {
+        this.returnVal = JSON.toJSONString(returnVal);
+    }
+}
