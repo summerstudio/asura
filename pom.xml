@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.asura</groupId>
+    <artifactId>asura</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <modules>
+        <module>asura-base</module>
+        <module>asura-cache</module>
+        <module>asura-conf</module>
+        <module>asura-dubbo</module>
+        <module>asura-quartz</module>
+        <module>asura-log</module>
+        <module>asura-monitor</module>
+        <module>asura-web</module>
+        <module>asura-dao</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <asura.version>1.0</asura.version>
+        <junit.version>4.11</junit.version>
+        <slf4j.version>1.7.10</slf4j.version>
+        <jackson.version>1.9.13</jackson.version>
+        <spring-consumer-version>2.5.6.SEC03</spring-consumer-version>
+        <springframework-version>3.2.13.RELEASE</springframework-version>
+        <dubbo.version>2.4.10</dubbo.version>
+        <httpclient.version>3.1</httpclient.version>
+        <commons-pool.version>1.6</commons-pool.version>
+        <commons-lang.version>2.6</commons-lang.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
+        <commons-beanutils.version>1.9.2</commons-beanutils.version>
+        <commons-codec.version>1.10</commons-codec.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <jedis.version>2.6.2</jedis.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <asura.version>1.0</asura.version>
+        <zookeeper.version>3.4.6</zookeeper.version>
+        <zkclient.version>0.1</zkclient.version>
+        <mysql.version>5.1.34</mysql.version>
+        <javax.ejb-api.version>3.2</javax.ejb-api.version>
+        <geronimo-jms_1.1_spec.version>1.1.1</geronimo-jms_1.1_spec.version>
+        <javax.mail.version>1.5.2</javax.mail.version>
+        <activation.version>1.1.1</activation.version>
+        <jta.version>1.1</jta.version>
+        <servlet-api.version>2.5</servlet-api.version>
+        <jsp-api.version>2.2</jsp-api.version>
+        <jstl-api.version>1.2</jstl-api.version>
+        <asura-quartz.version>1.8.6</asura-quartz.version>
+        <fastjson.version>1.2.5</fastjson.version>
+        <logback.version>1.1.3</logback.version>
+        <aspectj.version>1.8.5</aspectj.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
+        <velocity.version>1.7</velocity.version>
+        <commons-pool2.version>2.3</commons-pool2.version>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
+        <ibatis-sqlmap.version>2.3.0</ibatis-sqlmap.version>
+        <xstream.version>1.4.8</xstream.version>
+        <jmx.version>1.0</jmx.version>
+        <jmxremote.version>1.0</jmxremote.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- asura start -->
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-base</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-subscribe</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-quartz-all</artifactId>
+                <version>${asura-quartz.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-quartz-ext</artifactId>
+                <version>${asura-quartz.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-cache</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-dao-ibatis</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-dubbo-scheduler</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-logback</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>comcom-asura-framework-monitor-center</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>comcom-asura-framework-monitor-client</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>comcom-asura-framework-publish</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-web-oauth</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.asura</groupId>
+                <artifactId>com-asura-framework-web-velocity</artifactId>
+                <version>${asura.version}</version>
+            </dependency>
+            <!-- asura end -->
+
+            <!-- junit start -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <!-- junit end -->
+
+            <!-- slf4j，即简单日志门面（Simple Logging Facade for Java） start -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <!-- slf4j end -->
+
+            <!-- jackson start -->
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-asl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-lgpl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-lgpl</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!-- jackson end -->
+
+            <!-- spring start -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring</artifactId>
+                <version>${spring-consumer-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-instrument</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jms</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-oxm</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <!-- spring end -->
+
+            <!-- dubbo start -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- dubbo end -->
+
+            <!-- httpclient start -->
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <!-- httpclient end -->
+
+            <!-- Apache Commons start -->
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-pool</groupId>
+                <artifactId>commons-pool</artifactId>
+                <version>${commons-pool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>${commons-dbcp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+            <!-- Apache Commons end -->
+
+            <!-- redis-jedis start -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+            <!-- redis-jedis end -->
+
+            <!-- zookeeper start -->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.sgroschupf</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>${zkclient.version}</version>
+            </dependency>
+            <!-- zookeeper end -->
+
+            <!-- 定时任务使用jar start -->
+            <dependency>
+                <groupId>javax.ejb</groupId>
+                <artifactId>javax.ejb-api</artifactId>
+                <version>${javax.ejb-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>geronimo-jms_1.1_spec</artifactId>
+                <version>${geronimo-jms_1.1_spec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javax.mail.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>${activation.version}</version>
+            </dependency>
+            <!-- 定时任务使用jar end -->
+
+            <!-- mysql start -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!-- mysql end -->
+
+            <!-- jta start -->
+            <dependency>
+                <groupId>javax.transaction</groupId>
+                <artifactId>jta</artifactId>
+                <version>${jta.version}</version>
+            </dependency>
+            <!-- jta end -->
+
+            <!-- servlet start -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>${jsp-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp.jstl</groupId>
+                <artifactId>jstl-api</artifactId>
+                <version>${jstl-api.version}</version>
+            </dependency>
+            <!-- servlet end -->
+
+            <!-- fastjson start -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!-- fastjson end -->
+
+            <!-- springsource start -->
+            <dependency>
+                <groupId>com.springsource</groupId>
+                <artifactId>com.springsource.net.sf.cglib</artifactId>
+                <version>2.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springsource</groupId>
+                <artifactId>com.springsource.org.aopalliance</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springsource</groupId>
+                <artifactId>com.springsource.org.aspectj.weaver</artifactId>
+                <version>1.6.8.RELEASE</version>
+            </dependency>
+            <!-- springsource end -->
+
+            <!-- validation start -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api.version}</version>
+            </dependency>
+            <!-- validation end -->
+
+            <!-- aspectj start -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <!-- aspectj end -->
+
+            <!-- logback start -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <!-- logback end -->
+
+            <!-- velocity start -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <!-- velocity end -->
+
+            <!-- apache commens start -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- apache commens end -->
+
+            <!-- ibatis start -->
+            <dependency>
+                <groupId>org.apache.ibatis</groupId>
+                <artifactId>ibatis-sqlmap</artifactId>
+                <version>${ibatis-sqlmap.version}</version>
+            </dependency>
+            <!-- ibatis end -->
+
+            <!-- xstream start -->
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>${xstream.version}</version>
+            </dependency>
+            <!-- xstream end -->
+
+            <!-- jmx start 暂时没有用到 -->
+            <dependency>
+                <groupId>com.jmx</groupId>
+                <artifactId>jmx</artifactId>
+                <version>${jmx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jmxremote</groupId>
+                <artifactId>jmxremote</artifactId>
+                <version>${jmxremote.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jmxremote</groupId>
+                <artifactId>jmxremote_optional</artifactId>
+                <version>${jmxremote.version}</version>
+            </dependency>
+            <!-- jmx end -->
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- compiler插件, 设定JDK版本 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+
+                <!-- test插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <!--<skip>true</skip> -->
+                        <skip>true</skip>
+                        <failIfNoTests>false</failIfNoTests>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+
+                <!-- resource插件, 设定编码 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+
+                <!-- clean插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                </plugin>
+
+                <!-- install插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                </plugin>
+
+                <!-- deploy插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                </plugin>
+
+
+                <!-- war插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <configuration>
+                        <warName>${project.artifactId}</warName>
+                    </configuration>
+                </plugin>
+
+                <!-- jar插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.5</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                </plugin>
+
+                <!-- dependency插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                </plugin>
+
+                <!--release 插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>asura-release</id>
+            <url>http://localhost:8081/nexus/content/repositories/asura-release/</url>
+        </repository>
+        <snapshotRepository>
+            <id>asura-snapshot</id>
+            <url>http://localhost:8081/nexus/content/repositories/asura-snapshot/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
