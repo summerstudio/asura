@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="60 seconds">
+
+	<!-- <contextName>base-service</contextName> -->
+	<property name="log.base" value="../logs/biz" />
+	<property name="dubbo.log.base" value="../logs/dubbo" />
+	
+	<!-- <conversionRule conversionWord="ccp" converterClass="com.asura.logback.converter.ColorConverter"/> -->
+	
+	<appender name="syslog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${dubbo.log.base}/asura-service-provider.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${dubbo.log.base}/asura-service-provider-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss} [%-5p] [%t] %C{0}.%M - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="asura-data" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="com.asura.framework.logback.filter.ThresholdFilter">
+			<level>WARN</level>
+			<rebel>true</rebel>
+		</filter>
+		<file>${log.base}/asura-data.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.base}/asura-data-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss} [%-5p] [%t] [%X{address}] [%X{service}.%X{method}] %C{0}.%M - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="asura-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="com.asura.framework.logback.filter.ThresholdFilter" />
+		<file>${log.base}/asura-error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.base}/asura-error-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss} [%-5p] [%t] [%X{address}] [%X{service}.%X{method}] - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 记录com.asura包下的日志 -->
+	<logger name="com.asura" level="INFO" additivity="false">
+		<appender-ref ref="asura-data"/>
+		<appender-ref ref="asura-error" />
+	</logger>
+	
+	<logger name="org.springframework" level="INFO" additivity="false"/>
+
+	<!-- 在Dubbo环境下, 保留root目的是记录Dubbo及第三方日志记录. 无需在dubbo.properties中配置日志容器. -->
+	<root level="INFO">
+		<appender-ref ref="syslog" />
+	</root>
+</configuration>

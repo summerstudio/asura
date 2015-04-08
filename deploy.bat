@@ -29,6 +29,10 @@ CALL mvn -Dmaven.test.skip=true package
 CD %WORKING_SPACE%\asura-dao
 CALL mvn -Dmaven.test.skip=true package
 
+CD %WORKING_SPACE%\asura-message
+CALL mvn -Dmaven.test.skip=true install
+
+
 CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework-base -Dversion=1.0 -Dpackaging=jar -Dfile=%WORKING_SPACE%\asura-base\target\com-asura-framework-base-1.0.jar -Durl=http://localhost:8081/nexus/content/repositories/asura-release/ -DrepositoryId=asura-release
 CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework-publish -Dversion=1.0 -Dpackaging=jar -Dfile=%WORKING_SPACE%\asura-conf\target\com-asura-framework-publish-1.0.jar -Durl=http://localhost:8081/nexus/content/repositories/asura-release/ -DrepositoryId=asura-release
 CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework-subscribe -Dversion=1.0 -Dpackaging=jar -Dfile=%WORKING_SPACE%\asura-conf\target\com-asura-framework-subscribe-1.0.jar -Durl=http://localhost:8081/nexus/content/repositories/asura-release/ -DrepositoryId=asura-release
@@ -42,7 +46,8 @@ CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework
 CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework-web-oauth -Dversion=1.0 -Dpackaging=jar -Dfile=%WORKING_SPACE%\asura-web\target\com-asura-framework-web-oauth-1.0.jar -Durl=http://localhost:8081/nexus/content/repositories/asura-release/ -DrepositoryId=asura-release
 CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework-web-velocity -Dversion=1.0 -Dpackaging=jar -Dfile=%WORKING_SPACE%\asura-web\target\com-asura-framework-web-velocity-1.0.jar -Durl=http://localhost:8081/nexus/content/repositories/asura-release/ -DrepositoryId=asura-release
 CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework-dao-ibatis -Dversion=1.0 -Dpackaging=jar -Dfile=%WORKING_SPACE%\asura-dao\target\com-asura-framework-dao-ibatis-1.0.jar -Durl=http://localhost:8081/nexus/content/repositories/asura-release/ -DrepositoryId=asura-release
-
+CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework-message-consumer -Dversion=1.0 -Dpackaging=jar -Dfile=%WORKING_SPACE%\asura-message\target\com-asura-framework-message-consumer-1.0.jar -Durl=http://localhost:8081/nexus/content/repositories/asura-release/ -DrepositoryId=asura-release
+CALL mvn deploy:deploy-file -DgroupId=com.asura -DartifactId=com-asura-framework-message-provider -Dversion=1.0 -Dpackaging=jar -Dfile=%WORKING_SPACE%\asura-message\target\com-asura-framework-message-provider-1.0.jar -Durl=http://localhost:8081/nexus/content/repositories/asura-release/ -DrepositoryId=asura-release
 
 ECHO over!!!!!
 PAUSE

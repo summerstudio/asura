@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.asura.framework.message.mail.mailBlackDao">
+
+    <resultMap id="mailBlackEntityMap" class="com.asura.framework.message.entity.MailBlackEntity">
+        <result property="id" javaType="java.lang.Integer" column="id"/>
+        <result property="mailAddr" javaType="java.lang.String" column="mail_addr"/>
+        <result property="btype" javaType="java.lang.Integer" column="btype"/>
+        <result property="notes" javaType="java.lang.String" column="notes"/>
+        <result property="addDate" javaType="java.sql.Timestamp" column="add_date"/>
+    </resultMap>
+
+    <insert id="saveMailBlackEntity" parameterClass="com.asura.framework.message.entity.MailBlackEntity">
+        INSERT INTO asura_mail_black(
+        mail_addr,btype,notes
+        )VALUES(
+        #mailAddr#,#btype#,#notes#
+        )
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id;
+        </selectKey>
+    </insert>
+
+    <select id="getMailBlackByMailAddr" parameterClass="map" resultMap="mailBlackEntityMap">
+		SELECT 	
+		    id, 
+			mail_addr, 
+			btype, 
+			notes, 
+			add_date
+		FROM 
+			asura_mail_black
+		WHERE is_delete = 0 AND mail_addr = #mailAddr# AND btype = #btype#;
+	</select>
+
+    <select id="findMailBlackEntityByCondition" parameterClass="java.util.HashMap" resultMap="mailBlackEntityMap">
+
+        SELECT id,
+        mail_addr,
+        btype,
+        notes,
+        add_date
+
+        FROM asura_mail_black
+        WHERE is_delete = 0
+        <isNotEmpty prepend="AND" property="btype">
+            btype=#btype#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="mailAddr">
+            mail_addr like concat('%', #mailAddr#, '%')
+        </isNotEmpty>
+        ORDER BY add_date DESC
+        <dynamic prepend="LIMIT">
+            <isNotEmpty property="firstRowIndex" prepend=",">#firstRowIndex#</isNotEmpty>
+            <isNotEmpty property="pageSize" prepend=",">#pageSize#</isNotEmpty>
+        </dynamic>
+    </select>
+
+    <select id="countMailBlackEntityByCondition" parameterClass="java.util.HashMap" resultClass="long">
+        SELECT count(1)
+        FROM asura_mail_black
+        WHERE is_delete = 0
+        <isNotEmpty prepend="AND" property="btype">
+            btype=#btype#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="mailAddr">
+            mail_addr like concat('%', #mailAddr#, '%')
+        </isNotEmpty>
+    </select>
+
+    <update id="batchDeleteMailBlackEntity" parameterClass="java.util.HashMap">
+	    update asura_mail_black  set is_delete = 1 where id in ($ids$);
+	</update>
+
+</sqlMap>

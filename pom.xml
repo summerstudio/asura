@@ -18,6 +18,7 @@
         <module>asura-monitor</module>
         <module>asura-web</module>
         <module>asura-dao</module>
+        <module>asura-message</module>
     </modules>
 
     <properties>
@@ -59,8 +60,10 @@
         <velocity.version>1.7</velocity.version>
         <commons-pool2.version>2.3</commons-pool2.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
-        <ibatis-sqlmap.version>2.3.0</ibatis-sqlmap.version>
+        <ibatis-sqlmap.version>2.3.4.726</ibatis-sqlmap.version>
         <xstream.version>1.4.8</xstream.version>
+        <hibernate-validator.version>5.1.3.Final</hibernate-validator.version>
+        <el-api.version>2.2</el-api.version>
         <jmx.version>1.0</jmx.version>
         <jmxremote.version>1.0</jmxremote.version>
     </properties>
@@ -110,17 +113,17 @@
             </dependency>
             <dependency>
                 <groupId>com.asura</groupId>
-                <artifactId>comcom-asura-framework-monitor-center</artifactId>
+                <artifactId>com-asura-framework-monitor-center</artifactId>
                 <version>${asura.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.asura</groupId>
-                <artifactId>comcom-asura-framework-monitor-client</artifactId>
+                <artifactId>com-asura-framework-monitor-client</artifactId>
                 <version>${asura.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.asura</groupId>
-                <artifactId>comcom-asura-framework-publish</artifactId>
+                <artifactId>com-asura-framework-publish</artifactId>
                 <version>${asura.version}</version>
             </dependency>
             <dependency>
@@ -243,6 +246,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
                 <version>${springframework-version}</version>
             </dependency>
             <dependency>
@@ -434,6 +442,16 @@
                 <artifactId>com.springsource.org.aspectj.weaver</artifactId>
                 <version>1.6.8.RELEASE</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.ibatis</groupId>
+                <artifactId>com.springsource.com.ibatis</artifactId>
+                <version>2.3.4.726</version>
+            </dependency>
+            <dependency>
+                <groupId>com.springsource</groupId>
+                <artifactId>com.springsource.net.sf.cglib</artifactId>
+                <version>2.2.0</version>
+            </dependency>
             <!-- springsource end -->
 
             <!-- validation start -->
@@ -501,6 +519,22 @@
                 <version>${xstream.version}</version>
             </dependency>
             <!-- xstream end -->
+
+            <!-- hibernate start -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <!-- hibernate end -->
+
+            <!-- el api start -->
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>el-api</artifactId>
+                <version>${el-api.version}</version>
+            </dependency>
+            <!-- el api end -->
 
             <!-- jmx start 暂时没有用到 -->
             <dependency>

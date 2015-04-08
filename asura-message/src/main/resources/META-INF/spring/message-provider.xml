@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+    <dubbo:service interface="com.asura.framework.message.mail.api.MailSendService" ref="mail.mailSendServiceProxy">
+        <dubbo:method name="send" retries="0" timeout="6000"/>
+        <dubbo:method name="sendMailInfo" retries="0" timeout="6000"/>
+    </dubbo:service>
+
+    <dubbo:service interface="com.asura.framework.message.mail.api.inner.MailInnerService"
+                   ref="mail.mailInnerServiceProxy">
+        <dubbo:method name="findMailByPager" retries="3" timeout="6000"/>
+        <dubbo:method name="findMailBlackByPager" retries="3" timeout="6000"/>
+        <dubbo:method name="saveMailBlack" retries="0" timeout="6000"/>
+        <dubbo:method name="deleteMailBlack" retries="0" timeout="6000"/>
+        <dubbo:method name="repeatSend" retries="0" timeout="6000"/>
+    </dubbo:service>
+
+
+    <dubbo:service interface="com.asura.framework.message.station.api.StationSendService"
+                   ref="station.stationSendServiceProxy">
+        <dubbo:method name="send" retries="0" timeout="6000"/>
+        <dubbo:method name="sendStationInfo" retries="0" timeout="6000"/>
+    </dubbo:service>
+
+    <dubbo:service interface="com.asura.framework.message.station.api.inner.StationInnerSendService"
+                   ref="station.stationInnerSendServiceProxy">
+        <dubbo:method name="findStationByPager" retries="3" timeout="6000"/>
+        <dubbo:method name="repeatStation" retries="3" timeout="6000"/>
+    </dubbo:service>
+
+
+    <dubbo:service interface="com.asura.framework.message.sms.api.SmsSendService" ref="sms.smsSendServiceProxy">
+        <dubbo:method name="send" retries="0" timeout="6000"/>
+        <dubbo:method name="sendSmsInfo" retries="0" timeout="6000"/>
+    </dubbo:service>
+
+    <dubbo:service interface="com.asura.framework.message.sms.api.inner.SmsInnerService" ref="sms.smsInnerServiceProxy">
+        <dubbo:method name="findSmsByPager" retries="3" timeout="6000"/>
+        <dubbo:method name="findSmsBlackByPager" retries="3" timeout="6000"/>
+        <dubbo:method name="saveSmsBlack" retries="0" timeout="6000"/>
+        <dubbo:method name="deleteSmsBlack" retries="0" timeout="6000"/>
+        <dubbo:method name="repeatSend" retries="0" timeout="6000"/>
+    </dubbo:service>
+
+</beans>

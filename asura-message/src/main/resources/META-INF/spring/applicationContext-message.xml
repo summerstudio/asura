@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:property-placeholder
+            location="classpath:mail.properties,jdbc.properties,redis.properties,sms.properties,station.properties"/>
+
+    <!-- 项目注解扫描路径 -->
+    <context:component-scan base-package="com.asura"/>
+
+    <tx:annotation-driven/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+
+    <!--多数据源 共享配置 -->
+    <bean id="message.dbcp" abstract="true">
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <property name="validationQuery" value="${jdbc.validationQuery}"/>
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+    </bean>
+
+    <bean id="messageBasicDataSourceM" parent="message.dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="url" value="${jdbc.message.url.master}"/>
+        <property name="username" value="${jdbc.message.username.master}"/>
+        <property name="password" value="${jdbc.message.password.master}"/>
+    </bean>
+
+    <bean id="messageBasicDataSourceS" parent="message.dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="url" value="${jdbc.message.url.slave}"/>
+        <property name="username" value="${jdbc.message.username.slave}"/>
+        <property name="password" value="${jdbc.message.password.slave}"/>
+    </bean>
+
+    <bean id="messageSqlMapClientM" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="classpath:message-sqlmap-config.xml"/>
+        <property name="mappingLocations" value="classpath*:com/asura/**/dao/map/*.xml"/>
+        <property name="dataSource" ref="messageBasicDataSourceM"/>
+    </bean>
+
+    <bean id="messageSqlMapClientS" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="classpath:message-sqlmap-config.xml"/>
+        <property name="mappingLocations" value="classpath*:com/asura/**/dao/map/*.xml"/>
+        <property name="dataSource" ref="messageBasicDataSourceS"/>
+    </bean>
+
+
+    <!-- mail.mailDao配置 -->
+    <bean id="messageBaseIbatisDao" class="com.asura.framework.dao.ibatis.BaseIbatisDaoContext">
+        <property name="readSqlMapClient" ref="messageSqlMapClientM"></property>
+        <property name="writeSqlMapClient" ref="messageSqlMapClientS"></property>
+    </bean>
+
+
+    <bean id="transactionManagerMessage" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="messageBasicDataSourceM"/>
+    </bean>
+
+
+    <bean id="bugMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${bug.mail.host}"/>
+        <property name="username" value="${bug.mail.username}"/>
+        <property name="password" value="${bug.mail.password}"/>
+        <property name="port" value="${bug.mail.port}"/>
+        <property name="javaMailProperties">
+            <props>
+                <!--设置认证开关 -->
+                <prop key="mail.smtp.auth">true</prop>
+                <!-- 启动调试开关 -->
+                <prop key="mail.debug">fase</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <!-- gmail 的时候使用 <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop> -->
+            </props>
+        </property>
+    </bean>
+
+    <bean id="adMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${ad.mail.host}"/>
+        <property name="username" value="${ad.mail.username}"/>
+        <property name="password" value="${ad.mail.password}"/>
+        <property name="port" value="${ad.mail.port}"/>
+        <property name="javaMailProperties">
+            <props>
+                <!--设置认证开关 -->
+                <prop key="mail.smtp.auth">false</prop>
+                <!-- 启动调试开关 -->
+                <prop key="mail.debug">fase</prop>
+                <!-- gmail 的时候使用 <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop> -->
+            </props>
+        </property>
+    </bean>
+
+    <bean id="bizMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${biz.mail.host}"/>
+        <property name="username" value="${biz.mail.username}"/>
+        <property name="password" value="${biz.mail.password}"/>
+        <property name="port" value="${biz.mail.port}"/>
+        <property name="javaMailProperties">
+            <props>
+                <!--设置认证开关 -->
+                <prop key="mail.smtp.auth">true</prop>
+                <!-- 启动调试开关 -->
+                <prop key="mail.debug">fase</prop>
+                <!-- gmail 的时候使用 <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop> -->
+            </props>
+        </property>
+    </bean>
+</beans>

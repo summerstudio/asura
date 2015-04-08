@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.asura.framework.message.mail.mailDao">
+
+    <resultMap id="mailInfoEntityMap" class="com.asura.framework.message.entity.MailInfoEntity">
+        <result property="id" javaType="java.lang.Integer" column="id"/>
+        <result property="mtype" javaType="java.lang.Integer" column="mtype"/>
+        <result property="source" javaType="java.lang.String" column="source"/>
+        <result property="mailAddr" javaType="java.lang.String" column="mail_addr"/>
+        <result property="subject" javaType="java.lang.String" column="subject"/>
+        <result property="content" javaType="java.lang.String" column="content"/>
+        <result property="mailStatus" javaType="java.lang.Integer" column="mail_status"/>
+        <result property="retryNum" javaType="java.lang.Integer" column="retry_num"/>
+        <result property="addDate" javaType="java.sql.Timestamp" column="add_date"/>
+        <result property="sendDate" javaType="java.sql.Timestamp" column="send_date"/>
+    </resultMap>
+
+    <insert id="saveMailInfoEntity" parameterClass="com.asura.framework.message.entity.MailInfoEntity">
+        INSERT INTO asura_mail_info(
+        mtype,source,mail_addr,subject,content,mail_status,send_date
+        )VALUES(
+        #mtype#,#source#,#mailAddr#,#subject#,#content#,#mailStatus#,#sendDate#
+        )
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id;
+        </selectKey>
+    </insert>
+
+
+    <select id="repeatEmail" resultMap="mailInfoEntityMap">
+	<![CDATA[
+
+		 SELECT
+		 		id, 
+				mtype, 
+				source, 
+				mail_addr, 
+				subject, 
+				content, 
+				mail_status, 
+				retry_num, 
+				add_date, 
+				send_date
+		FROM asura_mail_info
+	    WHERE is_delete = 0 AND mail_status = 1 AND retry_num <= 3;
+
+        ]]>
+	</select>
+
+    <select id="getMailInfoById" parameterClass="java.util.HashMap" resultMap="mailInfoEntityMap">
+		SELECT 	id, 
+				mtype, 
+				source, 
+				mail_addr, 
+				subject, 
+				content, 
+				mail_status, 
+				retry_num, 
+				add_date, 
+				send_date
+		FROM asura_mail_info
+	    WHERE is_delete = 0 AND id = #id#;
+	</select>
+
+
+    <select id="findMailInfoEntityByCondition" parameterClass="java.util.HashMap" resultMap="mailInfoEntityMap">
+        SELECT id,
+        mtype,
+        source,
+        mail_addr,
+        subject,
+        content,
+        mail_status,
+        retry_num,
+        add_date,
+        send_date
+        FROM asura_mail_info
+        WHERE is_delete = 0
+        <isNotEmpty prepend="AND" property="mtype">
+            mtype=#mtype#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="mailAddr">
+            mail_addr like concat('%', #mailAddr#, '%')
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="source">
+            source=#source#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="mailStatus">
+            mail_status=#mailStatus#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="subject">
+            subject like concat('%', #subject#, '%')
+        </isNotEmpty>
+        ORDER BY send_date DESC
+        <dynamic prepend="LIMIT">
+            <isNotEmpty property="firstRowIndex" prepend=",">#firstRowIndex#</isNotEmpty>
+            <isNotEmpty property="pageSize" prepend=",">#pageSize#</isNotEmpty>
+        </dynamic>
+    </select>
+
+    <select id="countMailInfoEntityByCondition" parameterClass="java.util.HashMap" resultClass="long">
+        SELECT count(1)
+        FROM asura_mail_info
+        WHERE is_delete = 0
+        <isNotEmpty prepend="AND" property="mtype">
+            mtype=#mtype#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="mailAddr">
+            mail_addr like concat('%', #mailAddr#, '%')
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="source">
+            source=#source#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="mailStatus">
+            mail_status=#mailStatus#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="subject">
+            subject like concat('%', #subject#, '%')
+        </isNotEmpty>
+    </select>
+
+    <update id="updateMailInfoEntity" parameterClass="com.asura.framework.message.entity.MailInfoEntity">
+        UPDATE asura_mail_info
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="mailStatus">
+                mail_status=#mailStatus#
+            </isNotNull>
+            <isNotNull prepend="," property="retryNum">
+                retry_num=#retryNum#
+            </isNotNull>
+            <isNotNull prepend="," property="sendDate">
+                send_date=#sendDate#
+            </isNotNull>
+        </dynamic>
+        WHERE id=#id#
+    </update>
+
+</sqlMap>

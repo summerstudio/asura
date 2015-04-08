@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.asura.framework.message.sms.smsDao">
+
+    <resultMap id="smsInfoEntityMap" class="com.asura.framework.message.entity.SmsInfoEntity">
+        <result property="id" javaType="java.lang.Integer" column="id"/>
+        <result property="smsTel" javaType="java.lang.String" column="sms_tel"/>
+        <result property="smsStatus" javaType="java.lang.Integer" column="sms_status"/>
+        <result property="smsContent" javaType="java.lang.String" column="sms_content"/>
+        <result property="mtype" javaType="java.lang.Integer" column="mtype"/>
+        <result property="source" javaType="java.lang.String" column="source"/>
+        <result property="retryNum" javaType="java.lang.Integer" column="retry_num"/>
+        <result property="returnValue" javaType="java.lang.String" column="return_value"/>
+        <result property="addDate" javaType="java.sql.Timestamp" column="add_date"/>
+        <result property="sendDate" javaType="java.sql.Timestamp" column="send_date"/>
+    </resultMap>
+
+    <insert id="saveSmsInfoEntity" parameterClass="com.asura.framework.message.entity.SmsInfoEntity">
+        INSERT INTO asura_sms_info(
+        sms_tel,sms_status,sms_content,mtype,source,send_date
+        )VALUES(
+        #smsTel#,#smsStatus#,#smsContent#,#mtype#,#source#,#sendDate#
+        )
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id;
+        </selectKey>
+    </insert>
+
+
+    <update id="updateSmsInfoEntity" parameterClass="com.asura.framework.message.entity.SmsInfoEntity">
+        UPDATE asura_sms_info
+        <dynamic prepend="set">
+            <isNotNull prepend="," property="smsStatus">
+                sms_status=#smsStatus#
+            </isNotNull>
+
+            <isNotNull prepend="," property="retryNum">
+                retry_num=#retryNum#
+            </isNotNull>
+
+            <isNotNull prepend="," property="sendDate">
+                send_date=#sendDate#
+            </isNotNull>
+        </dynamic>
+        WHERE id=#id#
+    </update>
+
+    <select id="repeatSms" resultMap="smsInfoEntityMap">
+	 <![CDATA[
+
+		 SELECT 	
+			    id, 
+				sms_tel, 
+				sms_status, 
+				sms_content, 
+				mtype, 
+				source, 
+				retry_num, 
+				return_value, 
+				add_date, 
+				send_date
+			FROM 
+				asura_sms_info
+		    WHERE retry_num <=3 AND sms_status = #status#;
+
+        ]]>
+		
+	</select>
+
+    <select id="findSmsInfoEntityByCondition" parameterClass="java.util.HashMap" resultMap="smsInfoEntityMap">
+        SELECT
+        id,
+        sms_tel,
+        sms_status,
+        sms_content,
+        mtype,
+        source,
+        retry_num,
+        return_value,
+        add_date,
+        send_date
+        FROM
+        asura_sms_info
+        WHERE 1 = 1
+        <isNotEmpty prepend="AND" property="mtype">
+            mtype=#mtype#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="smsTel">
+            sms_tel like concat('%', #smsTel#, '%')
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="source">
+            source=#source#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="smsStatus">
+            sms_status=#smsStatus#
+        </isNotEmpty>
+        ORDER BY send_date DESC
+        <dynamic prepend="LIMIT">
+            <isNotEmpty property="firstRowIndex" prepend=",">#firstRowIndex#</isNotEmpty>
+            <isNotEmpty property="pageSize" prepend=",">#pageSize#</isNotEmpty>
+        </dynamic>
+    </select>
+
+    <select id="countSmsInfoEntityByCondition" parameterClass="java.util.HashMap" resultClass="long">
+        SELECT count(1)
+        FROM asura_sms_info
+        WHERE 1 = 1
+        <isNotEmpty prepend="AND" property="mtype">
+            mtype=#mtype#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="smsTel">
+            sms_tel like concat('%', #smsTel#, '%')
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="source">
+            source=#source#
+        </isNotEmpty>
+        <isNotEmpty prepend="AND" property="smsStatus">
+            sms_status=#smsStatus#
+        </isNotEmpty>
+    </select>
+
+</sqlMap>
