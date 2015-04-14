@@ -19,6 +19,7 @@
         <module>asura-web</module>
         <module>asura-dao</module>
         <module>asura-message</module>
+        <module>asura-file</module>
     </modules>
 
     <properties>
